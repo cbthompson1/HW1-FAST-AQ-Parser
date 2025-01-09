@@ -27,7 +27,7 @@ def test_FastaParser():
     """
     Test correct functionality of Fasta parser.
     """
-    fasta = FastaParser('test_data/test.fa')
+    fasta = FastaParser('tests/test_data/test.fa')
     res = []
     res_5_expected = (
         # 0
@@ -56,7 +56,7 @@ def test_FastaParser_blank():
     """
     Test error handling of Fasta parser when input file is blank.
     """
-    fasta = FastaParser('test_data/blank.fa')
+    fasta = FastaParser('tests/test_data/blank.fa')
     res = []
     with pytest.raises(ValueError):
             for seq in fasta:
@@ -66,7 +66,7 @@ def test_FastaParser_bad():
     """
     Test error handling of Fasta parser when input file is bad.
     """
-    fasta = FastaParser('test_data/bad.fa')
+    fasta = FastaParser('tests/test_data/bad.fa')
     res = []
     with pytest.raises(ValueError):
             for seq in fasta:
@@ -77,7 +77,7 @@ def test_FastaFormat():
     Test to make sure that if a fastq file is inputted into the fasta parser,
     the first result is 'None'
     """
-    fasta_parser_fastq_file = FastaParser('test_data/test.fq')
+    fasta_parser_fastq_file = FastaParser('tests/test_data/test.fq')
     res = []
     for line in fasta_parser_fastq_file:
          res.append(line)
@@ -88,7 +88,7 @@ def test_FastqParser():
     """
     Test correct functionality of Fastq parser.
     """
-    fastq = FastqParser('test_data/test.fq')
+    fastq = FastqParser('tests/test_data/test.fq')
     res = []
     res_5_expected = (
         # 0
@@ -126,7 +126,7 @@ def test_FastqParser_blank():
     """
     Test error handling of Fastq parser when input file is blank.
     """
-    fastq = FastqParser('test_data/blank.fq')
+    fastq = FastqParser('tests/test_data/blank.fq')
     res = []
     with pytest.raises(ValueError):
             for seq in fastq:
@@ -136,7 +136,7 @@ def test_FastqParser_bad():
     """
     Test error handling of Fastq parser when input file is bad.
     """
-    fastq = FastqParser('test_data/bad.fq')
+    fastq = FastqParser('tests/test_data/bad.fq')
     res = []
     with pytest.raises(ValueError):
             for seq in fastq:
@@ -147,7 +147,7 @@ def test_FastqFormat():
     Test to make sure if a fastq parser is provided a fasta file, the first
     result includes None as its first element.
     """
-    fastq_parser_fasta_file = FastqParser('test_data/test.fa')
+    fastq_parser_fasta_file = FastqParser('tests/test_data/test.fa')
     res = []
     for line in fastq_parser_fasta_file:
          res.append(line)
