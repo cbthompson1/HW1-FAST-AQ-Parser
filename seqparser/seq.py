@@ -7,16 +7,31 @@ ALLOWED_NUC = TRANSCRIPTION_MAPPING.keys()
 
 def transcribe(seq: str, reverse: bool = False) -> str:
     """
-    Write a function that will transcribe (replace DNA sequence to RNA
-    by replacing all 'T' to 'U') in an input sequence
+    Transcribes a sequence of DNA nucleotides into their RNA transcription
+    equivalent.
+
+    Inputs:
+        seq (str): sequence of nucleotides. Should only contain chars 'ATCG'.
+        reverse (bool): flag to determine whether to reverse output.
+    Output:
+        (Potentially reversed) RNA nucleotide sequence.
     """
-    pass
+
+    transcription_result = []
+    for nucleotide in seq:
+        new_nucleotide = TRANSCRIPTION_MAPPING[nucleotide]
+        transcription_result.append(new_nucleotide)
+    if reverse:
+        transcription_result = transcription_result[::-1]
+    return ''.join(transcription_result)
 
 def reverse_transcribe(seq: str) -> str:
     """
-    Write a function that will transcribe an input sequence and reverse
-    the sequence
+    Reverse transcribes a DNA nucleotide sequence.
+
+    Input:
+        seq (str): sequence of nucleotides. Should only contain chars 'ATCG'.
+    Output:
+        Reversed RNA nucleotide sequence.
     """
-    # Hey this is my comment
-    # Again!
-    pass
+    return transcribe(seq, reverse=True)

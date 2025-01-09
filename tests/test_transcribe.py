@@ -1,5 +1,6 @@
 # write tests for transcribe functions
 
+import pytest
 from seqparser import (
         transcribe,
         reverse_transcribe)
@@ -23,13 +24,24 @@ def test_freebie_transcribe_2():
         
 def test_transcribe():
     """
-    Write your unit test for the transcribe function here.
+    Transcribe function correctly outputs for all nucleotides expected.
     """
-    pass
+    test_seq = 'ATCG'
+    res = transcribe(test_seq)
+    assert res == 'UAGC'
 
+def test_transcribe_bad_input():
+    """
+    Transcribe function throws KeyError if unexpected char is in the input.
+    """
+    test_seq = 'ATCGX'
+    with pytest.raises(KeyError):
+        res = transcribe(test_seq)
 
 def test_reverse_transcribe():
     """
-    Write your unit test for the reverse transcribe function here.
+    Reverse transcribe correctly reverses the test sequence after transcribing.
     """
-    pass
+    test_seq = 'ATCG'
+    res = reverse_transcribe(test_seq)
+    assert res == 'CGAU'

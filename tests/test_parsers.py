@@ -25,36 +25,130 @@ def test_freebie_parser_2():
         
 def test_FastaParser():
     """
-    Write your unit test for your FastaParser class here. You should generate
-    an instance of your FastaParser class and assert that it properly reads in
-    the example Fasta File.
-
-    Some example of "good" test cases might be handling edge cases, like Fasta
-    files that are blank or corrupted in some way. Two example Fasta files are
-    provided in /tests/bad.fa and /tests/empty.fa
+    Test correct functionality of Fasta parser.
     """
-    pass
+    fasta = FastaParser('test_data/test.fa')
+    res = []
+    res_5_expected = (
+        # 0
+        'seq5',
+        # 1
+        'TAAGTAGTGCACTCCTGCGCGTCTCTTCCCAGAATCGTACTCTCAGAGCTAGAGAGGCGCGTTTGCCGT'
+        'TCTACTCACCCCAGCCTCTGAAGAGGGATGC'
+    )
+    res_98_expected = (
+        # 0
+        'seq98',
+        # 1
+        'CGAGCGAGAAACGCGCTAACTAGCAACCGGAACAACAATGCTGGGTTGAATTTGATTCGCACCCGACGA'
+        'TCACTAGAGAGTTTATCTGGGACTCCGGGAC'
+    )
 
+    for seq in fasta:
+        res.append(seq)
+    assert len(res) == 100
+
+    # Check two positions of the parser and confirm they match.
+    assert res[5] == res_5_expected
+    assert res[98] == res_98_expected
+
+def test_FastaParser_blank():
+    """
+    Test error handling of Fasta parser when input file is blank.
+    """
+    fasta = FastaParser('test_data/blank.fa')
+    res = []
+    with pytest.raises(ValueError):
+            for seq in fasta:
+                res.append(seq)
+
+def test_FastaParser_bad():
+    """
+    Test error handling of Fasta parser when input file is bad.
+    """
+    fasta = FastaParser('test_data/bad.fa')
+    res = []
+    with pytest.raises(ValueError):
+            for seq in fasta:
+                res.append(seq)
 
 def test_FastaFormat():
     """
-    Test to make sure that a fasta file is being read in if a fastq file is
-    read, the first item is None
+    Test to make sure that if a fastq file is inputted into the fasta parser,
+    the first result is 'None'
     """
-    pass
+    fasta_parser_fastq_file = FastaParser('test_data/test.fq')
+    res = []
+    for line in fasta_parser_fastq_file:
+         res.append(line)
+    assert res[0] == (None, '@seq0')
 
 
 def test_FastqParser():
     """
-    Write your unit test for your FastqParser class here. You should generate
-    an instance of your FastqParser class and assert that it properly reads 
-    in the example Fastq File.
+    Test correct functionality of Fastq parser.
     """
-    pass
+    fastq = FastqParser('test_data/test.fq')
+    res = []
+    res_5_expected = (
+        # 0
+        'seq5',
+        # 1
+        'CGCGATGAAGAAGACCTATCCCAACTTGCTCTGGCTAGCCTCGCCAAGTATGATAGGATCCATCGTCTA'
+        'TCATGCATGCGTTAGACACTTGCTGGAGTAC',
+        # 2
+        ':+;!5\'&.";$+/2;!##<\'!9+&4#3"2>,=*%)""<&=*2,$651/&01#*%.:=5-:&,:(%>/'
+        ';0!0%#4/-807+5"6;&::>;&.9+((!5\'&5'
+
+    )
+    res_98_expected = (
+        # 0
+        'seq98',
+        # 1
+        'AACCTGCCCGTAGCCTTTAGGTAGCCCGTCTACATGTCCTCCAGTACAGTGGAAGCTCCTACATCAACT'
+        'GATCAAATAACATCGCAGCACTATATGTCAC',
+        # 2
+        '39$$8\'\':7:0;0%/7$89-<3\',:)1"0\'=2\'!#5><>+6/=99#>8-$76(6$2\'+=;$-)'
+        ')753#99,=+4+1=:5.08*$*:4=,>)/)\':8,<48'
+    )
+
+    for seq in fastq:
+        res.append(seq)
+
+    # Check overall length is good.
+    assert len(res) == 100
+
+    # Check two positions of the parser and confirm they match.
+    assert res[5] == res_5_expected
+    assert res[98] == res_98_expected
+
+def test_FastqParser_blank():
+    """
+    Test error handling of Fastq parser when input file is blank.
+    """
+    fastq = FastqParser('test_data/blank.fq')
+    res = []
+    with pytest.raises(ValueError):
+            for seq in fastq:
+                res.append(seq)
+
+def test_FastqParser_bad():
+    """
+    Test error handling of Fastq parser when input file is bad.
+    """
+    fastq = FastqParser('test_data/bad.fq')
+    res = []
+    with pytest.raises(ValueError):
+            for seq in fastq:
+                res.append(seq)
 
 def test_FastqFormat():
     """
-    Test to make sure fastq file is being read in. If this is a fasta file, the
-    first line is None
+    Test to make sure if a fastq parser is provided a fasta file, the first
+    result includes None as its first element.
     """
-    pass
+    fastq_parser_fasta_file = FastqParser('test_data/test.fa')
+    res = []
+    for line in fastq_parser_fasta_file:
+         res.append(line)
+    assert res[0][0] == None
