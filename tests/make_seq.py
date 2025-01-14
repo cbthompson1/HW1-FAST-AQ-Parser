@@ -38,11 +38,11 @@ def iter_seq(n=100, l=100, is_fastq=False):
 def main():
     np.random.seed(SEED)
     
-    with open("test.fa", "w+") as f:
+    with open("test_data/test.fa", "w+") as f:
         for h, s in iter_seq():
             f.write(f">{h}\n{s}\n")
 
-    with open("test.fq", "w+") as f:
+    with open("test_data/test.fq", "w+") as f:
         for h, s, q in iter_seq(is_fastq=True):
             f.write(f"@{h}\n{s}\n+\n{q}\n")
 
