@@ -9,21 +9,29 @@ def main():
     The main function
     """
     # Create instance of FastaParser
+    fast_a = FastaParser('data/fasta.fa')
     # Create instance of FastqParser
+    fast_q = FastqParser('data/fastq.fq')
         
     # For each record of FastaParser, Transcribe the sequence
     # and print it to console
-       
+    for seq in fast_a:
+        print(transcribe(seq[1]))
+
     # For each record of FastqParser, Transcribe the sequence
     # and print it to console
-
+    for seq in fast_q:
+        print(transcribe(seq[1]))
 
     # For each record of FastaParser, Reverse Transcribe the sequence
     # and print it to console
-       
+    for seq in fast_a:
+        print(reverse_transcribe(seq[1]))
+
     # For each record of FastqParser, Reverse Transcribe the sequence
     # and print it to console
-
+    for seq in fast_q:
+        print(reverse_transcribe(seq[1]))
 
 """
 When executing a python script from the command line there will
